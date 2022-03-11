@@ -5,17 +5,17 @@ const socket = require("socket.io");
 const io = socket(server);
 
 app.use(cors());
-const PORT = process.env.PORT || 5000;
+const PORT = process?.env.PORT || 5000;
 
 const users = {};
 const socketToRoom = {};
-
 
 app.get('/', (_, res) => {
 	res.send('Running');
 });
 
 io.on('connection', socket => {
+
 	socket.on("join room", roomID => {
 		if (users[roomID]) {
 			const length = users[roomID].length;
@@ -27,6 +27,7 @@ io.on('connection', socket => {
 		} else {
 			users[roomID] = [socket.id];
 		}
+
 		socketToRoom[socket.id] = roomID;
 		const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
 
@@ -56,7 +57,7 @@ io.on('connection', socket => {
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 
-/****************************************** last version ***************************************** */
+/****************************************** previous version ***************************************** */
 
 // const io = require("socket.io")(server, {
 // 	cors: {
